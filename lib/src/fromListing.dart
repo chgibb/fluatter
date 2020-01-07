@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:fluatter/src/lua.dart';
+import 'package:fluatter/src/util/nextNonEmptyElement.dart';
 
 enum _ParseState {
   nothing,
@@ -93,12 +94,14 @@ Interpreter interpreterFromListing(String listing) {
 
       case _ParseState.parsingFunctionBody:
         List<String> tokens = lines[i].split(RegExp("\\s"));
-
+        var a = nextNonEmptyElement(tokens, 5);
+        var b = nextNonEmptyElement(tokens, a.i + 1);
+        var c = nextNonEmptyElement(tokens, b.i + 1);
         instructions.add(Instruction(
           name: tokens[3],
-          A: int.tryParse(tokens[5]) ?? 0,
-          B: int.tryParse(tokens[6]) ?? 0,
-          C: int.tryParse(tokens[7]) ?? 0,
+          A: int.tryParse(a.element) ?? 0,
+          B: int.tryParse(b.element) ?? 0,
+          C: int.tryParse(c?.element ?? "") ?? 0,
         ));
         break;
 
