@@ -1,0 +1,14 @@
+
+main <fixtures/abc.lua:0,0> (4 instructions at 0x55ed0d5bbc50)
+0+ params, 2 slots, 1 upvalue, 0 locals, 3 constants, 0 functions
+	1	[1]	SETTABUP 	0 -1 -1	; _ENV "a" "a"
+	2	[2]	SETTABUP 	0 -2 -2	; _ENV "b" "b"
+	3	[3]	SETTABUP 	0 -3 -3	; _ENV "c" "c"
+	4	[3]	RETURN   	0 1
+constants (3) for 0x55ed0d5bbc50:
+	1	"a"
+	2	"b"
+	3	"c"
+locals (0) for 0x55ed0d5bbc50:
+upvalues (1) for 0x55ed0d5bbc50:
+	0	_ENV	1	0
