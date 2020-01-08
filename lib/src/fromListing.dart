@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:fluatter/src/func.dart';
+import 'package:fluatter/src/instruction.dart';
 import 'package:fluatter/src/lua.dart';
 import 'package:fluatter/src/util/nextNonEmptyElement.dart';
 

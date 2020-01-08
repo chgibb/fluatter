@@ -1,3 +1,6 @@
+import 'package:fluatter/src/func.dart';
+import 'package:fluatter/src/opCode.dart';
+import 'package:fluatter/src/stackFrame.dart';
 import 'package:flutter/widgets.dart';
 
 class Interpreter {
@@ -8,7 +11,7 @@ class Interpreter {
   dynamic R(dynamic i) => _registers[i];
   dynamic Kst(dynamic n) => _constants[n];
   dynamic Gbl(dynamic sym) => _globalSymbols[sym];
-  dynamic Upvalue(dynamic n, StackFrame stackFrame) => stackFrame._upvalues[n];
+  dynamic Upvalue(dynamic n, StackFrame stackFrame) => stackFrame.upvalues[n];
   dynamic RK(dynamic i) => _registers[i] != null ? _registers[i] : Gbl(i);
 
   Map<String, OpCode> _opcodes = {};
@@ -58,55 +61,4 @@ class Interpreter {
     stackFrames.add(StackFrame(func: functions[funcName]));
     exec(saveLastFrame: saveLastFrame);
   }
-}
-
-class StackFrame {
-  final Func func;
-  final Map<int, dynamic> _upvalues;
-
-  StackFrame({@required this.func}) : _upvalues = Map.from(func.upvalues);
-}
-
-class OpCode {
-  final void Function(int, int, int, Interpreter) exec;
-
-  OpCode({@required this.exec});
-}
-
-class Instruction {
-  final String name;
-  final int A;
-  final int B;
-  final int C;
-
-  Instruction(
-      {@required this.name,
-      @required this.A,
-      @required this.B,
-      @required this.C});
-}
-
-class Func {
-  final String name;
-  final int params;
-  final int slots;
-  final int numupvalues;
-  final int locals;
-  final int constants;
-  final int functions;
-
-  final List<Instruction> instructionStream;
-
-  final Map<int, dynamic> upvalues;
-
-  Func(
-      {@required this.name,
-      @required this.params,
-      @required this.slots,
-      @required this.numupvalues,
-      @required this.locals,
-      @required this.constants,
-      @required this.functions,
-      @required this.instructionStream,
-      @required this.upvalues});
 }
