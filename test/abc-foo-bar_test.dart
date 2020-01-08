@@ -25,7 +25,27 @@ end
     var interpreter = interpreterFromListing(
         File("fixtures/abc-foo-bar.txt").readAsStringSync());
 
-    Func foo = interpreter.closures["foo"];
+    var mainFunc = interpreter.mainFunc;
+    expect(mainFunc, isNotNull);
+    expect(mainFunc.constants.length, 3);
+    expect(mainFunc.constants[0], null);
+    expect(mainFunc.constants[1], "foo");
+    expect(mainFunc.constants[2], "bar");
+
+    var foo = interpreter.closures["0x55566bee9990"];
     expect(foo, isNotNull);
+    expect(foo.constants.length, 4);
+    expect(foo.constants[0], null);
+    expect(foo.constants[1], 1);
+    expect(foo.constants[2], 2);
+    expect(foo.constants[3], 3);
+
+    var bar = interpreter.closures["0x55566bee9fe0"];
+    expect(bar, isNotNull);
+    expect(bar.constants.length, 4);
+    expect(bar.constants[0], null);
+    expect(bar.constants[1], 1);
+    expect(bar.constants[2], 2);
+    expect(bar.constants[3], 3);
   });
 }

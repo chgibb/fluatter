@@ -90,7 +90,13 @@ Interpreter interpreterFromListing(String listing) {
         }
         List<String> tokens = lines[i].split(RegExp("\\s"));
 
-        funcName = tokens[0];
+        funcName = tokens[0] == "main" ? "main" : "";
+
+        if (funcName == "") {
+          funcName = RegExp("(0x(\d|\\w)+\\))").firstMatch(lines[i]).group(0);
+          funcName = funcName.substring(0, funcName.length - 1);
+        }
+
         parseState = _ParseState.parsingFunctionHeader;
         break;
 
