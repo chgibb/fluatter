@@ -50,5 +50,7 @@ void main() {
 
     expect(interpreter.stackFrames.length, 1);
     expect(interpreter.stackFrames[0].func.upvalues[0]["a"], 1);
+    expect(interpreter.stackFrames[0].func.upvalues[0]["b"], 2);
+    expect(interpreter.stackFrames[0].func.upvalues[0]["c"], 3);
   });
 }

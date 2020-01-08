@@ -19,6 +19,10 @@ class Interpreter {
   @visibleForTesting
   List<StackFrame> stackFrames = [];
 
+  void writeConstant(int key, dynamic val) {
+    _constants[key] = val;
+  }
+
   void addFunction(Func func) {
     functions[func.name] = func;
   }
@@ -28,8 +32,6 @@ class Interpreter {
     _opcodes["SETTABUP"] =
         OpCode(exec: (int A, int B, int C, Interpreter interpreter) {
       _registers = {A: A, B: _constants[B.abs()], C: _constants[C.abs()]};
-
-      print(_registers);
 
       interpreter.Upvalue(A, interpreter.stackFrames.last)[interpreter.RK(B)] =
           interpreter.RK(C);

@@ -111,6 +111,22 @@ Interpreter interpreterFromListing(String listing) {
         if (instructions.isNotEmpty) {
           flushFunction();
         }
+
+        List<String> tokens = lines[i].split(RegExp("\\s"));
+        var index = nextNonEmptyElement(tokens, 0);
+
+        var val = tokens.skip(index.i + 1).join("");
+
+        if (val[0] == "\"") {
+          val = val.substring(1, val.length);
+          val = val.substring(0, val.length - 1);
+          interpreter.writeConstant(int.tryParse(index.element), val);
+          break;
+        }
+
+        interpreter.writeConstant(
+            int.tryParse(index.element), int.tryParse(val));
+
         break;
 
       case _ParseState.parsingLocals:
