@@ -1,0 +1,46 @@
+
+main <fixtures/abc-foo-bar.lua:0,0> (5 instructions at 0x55566bee9700)
+0+ params, 2 slots, 1 upvalue, 0 locals, 2 constants, 2 functions
+	1	[5]	CLOSURE  	0 0	; 0x55566bee9990
+	2	[1]	SETTABUP 	0 -1 0	; _ENV "foo"
+	3	[11]	CLOSURE  	0 1	; 0x55566bee9fe0
+	4	[7]	SETTABUP 	0 -2 0	; _ENV "bar"
+	5	[11]	RETURN   	0 1
+constants (2) for 0x55566bee9700:
+	1	"foo"
+	2	"bar"
+locals (0) for 0x55566bee9700:
+upvalues (1) for 0x55566bee9700:
+	0	_ENV	1	0
+
+function <fixtures/abc-foo-bar.lua:1,5> (4 instructions at 0x55566bee9990)
+0 params, 3 slots, 0 upvalues, 3 locals, 3 constants, 0 functions
+	1	[2]	LOADK    	0 -1	; 1
+	2	[3]	LOADK    	1 -2	; 2
+	3	[4]	LOADK    	2 -3	; 3
+	4	[5]	RETURN   	0 1
+constants (3) for 0x55566bee9990:
+	1	1
+	2	2
+	3	3
+locals (3) for 0x55566bee9990:
+	0	a	2	5
+	1	b	3	5
+	2	c	4	5
+upvalues (0) for 0x55566bee9990:
+
+function <fixtures/abc-foo-bar.lua:7,11> (4 instructions at 0x55566bee9fe0)
+0 params, 3 slots, 0 upvalues, 3 locals, 3 constants, 0 functions
+	1	[8]	LOADK    	0 -1	; 1
+	2	[9]	LOADK    	1 -2	; 2
+	3	[10]	LOADK    	2 -3	; 3
+	4	[11]	RETURN   	0 1
+constants (3) for 0x55566bee9fe0:
+	1	1
+	2	2
+	3	3
+locals (3) for 0x55566bee9fe0:
+	0	a	2	5
+	1	b	3	5
+	2	c	4	5
+upvalues (0) for 0x55566bee9fe0:
