@@ -38,27 +38,29 @@ Interpreter interpreterFromListing(String listing) {
 
   String funcName;
   int slots;
-  int upvalues;
+  int numupvalues;
   int locals;
   int constants;
   int functions;
   int params;
   List<Instruction> instructions = [];
+  Map<int, dynamic> upvalues = {};
 
   var flushFunction = () {
     interpreter.addFunction(Func(
         name: funcName,
         slots: slots,
-        upvalues: upvalues,
+        numupvalues: numupvalues,
         locals: locals,
         constants: constants,
         functions: functions,
         params: params,
-        instructionStream: instructions));
+        instructionStream: instructions,
+        upvalues: upvalues));
 
     funcName = "";
     slots = 0;
-    upvalues = 0;
+    numupvalues = 0;
     locals = 0;
     constants = 0;
     functions = 0;
@@ -85,7 +87,7 @@ Interpreter interpreterFromListing(String listing) {
       case _ParseState.parsingFunctionHeader:
         List<String> tokens = lines[i].split(RegExp("\\s"));
         slots = int.parse(tokens[2]);
-        upvalues = int.parse(tokens[4]);
+        numupvalues = int.parse(tokens[4]);
         locals = int.parse(tokens[6]);
         constants = int.parse(tokens[8]);
         functions = int.parse(tokens[10]);
@@ -121,6 +123,9 @@ Interpreter interpreterFromListing(String listing) {
         if (instructions.isNotEmpty) {
           flushFunction();
         }
+        List<String> tokens = lines[i].split(RegExp("\\s"));
+
+        var key = nextNonEmptyElement(tokens, 0);
         break;
     }
   }

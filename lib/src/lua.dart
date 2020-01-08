@@ -4,12 +4,11 @@ class Interpreter {
   Map<dynamic, dynamic> _registers = {};
   Map<dynamic, dynamic> _constants = {};
   Map<dynamic, dynamic> _globalSymbols = {};
-  Map<dynamic, dynamic> _upvalues = {};
 
   dynamic R(dynamic i) => _registers[i];
   dynamic Kst(dynamic n) => _constants[n];
   dynamic Gbl(dynamic sym) => _globalSymbols[sym];
-  dynamic Upvalue(dynamic n) => _upvalues[n];
+  dynamic Upvalue(dynamic n, StackFrame stackFrame) => stackFrame._upvalues[n];
   dynamic RK(dynamic i) => _registers[i] != null ? _registers[i] : Gbl(i);
 
   Map<String, OpCode> _opcodes = {};
@@ -17,19 +16,45 @@ class Interpreter {
   @visibleForTesting
   Map<String, Func> functions = {};
 
+  @visibleForTesting
+  List<StackFrame> stackFrames = [];
+
   void addFunction(Func func) {
     functions[func.name] = func;
   }
 
+  //https://the-ravi-programming-language.readthedocs.io/en/latest/lua_bytecode_reference.html
   Interpreter() {
-    _opcodes["SETABBUP"] =
+    _opcodes["SETTABUP"] =
         OpCode(exec: (int A, int B, int C, Interpreter interpreter) {
-      interpreter.Upvalue(A)[interpreter.RK(B)] = interpreter.RK(C);
+      interpreter.Upvalue(A, interpreter.stackFrames.last)[interpreter.RK(B)] =
+          interpreter.RK(C);
     });
 
     _opcodes["RETURN"] =
         OpCode(exec: (int A, int B, int C, Interpreter interpreter) {});
   }
+
+  void exec() {
+    while (stackFrames.last != null) {
+      stackFrames.last.func.instructionStream
+          .forEach((x) => _opcodes[x.name].exec(x.A, x.B, x.C, this));
+
+      stackFrames.removeLast();
+    }
+  }
+
+  void call(String funcName) {
+    stackFrames.add(StackFrame(func: functions[funcName]));
+    exec();
+  }
+}
+
+class StackFrame {
+  final Func func;
+  final Map<int, dynamic> _upvalues;
+
+  StackFrame({@required this.func}) : _upvalues = Map.from(func.upvalues);
 }
 
 class OpCode {
@@ -55,20 +80,23 @@ class Func {
   final String name;
   final int params;
   final int slots;
-  final int upvalues;
+  final int numupvalues;
   final int locals;
   final int constants;
   final int functions;
 
   final List<Instruction> instructionStream;
 
+  final Map<int, dynamic> upvalues;
+
   Func(
       {@required this.name,
       @required this.params,
       @required this.slots,
-      @required this.upvalues,
+      @required this.numupvalues,
       @required this.locals,
       @required this.constants,
       @required this.functions,
-      @required this.instructionStream});
+      @required this.instructionStream,
+      @required this.upvalues});
 }
