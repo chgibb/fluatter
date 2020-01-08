@@ -126,6 +126,8 @@ Interpreter interpreterFromListing(String listing) {
         List<String> tokens = lines[i].split(RegExp("\\s"));
 
         var key = nextNonEmptyElement(tokens, 0);
+        upvalues[int.tryParse(key?.element ?? "") ?? 0] =
+            Map<dynamic, dynamic>();
         break;
     }
   }

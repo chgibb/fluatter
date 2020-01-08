@@ -46,6 +46,9 @@ void main() {
     expect(mainFunc.instructionStream[3].B, 1);
     expect(mainFunc.instructionStream[3].C, 0);
 
-    interpreter.call("main");
+    interpreter.call("main", saveLastFrame: true);
+
+    expect(interpreter.stackFrames.length, 1);
+    expect(interpreter.stackFrames[0].func.upvalues[0]["a"], 1);
   });
 }

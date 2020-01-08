@@ -27,6 +27,10 @@ class Interpreter {
   Interpreter() {
     _opcodes["SETTABUP"] =
         OpCode(exec: (int A, int B, int C, Interpreter interpreter) {
+      _registers = {A: A, B: _constants[B.abs()], C: _constants[C.abs()]};
+
+      print(_registers);
+
       interpreter.Upvalue(A, interpreter.stackFrames.last)[interpreter.RK(B)] =
           interpreter.RK(C);
     });
@@ -35,18 +39,22 @@ class Interpreter {
         OpCode(exec: (int A, int B, int C, Interpreter interpreter) {});
   }
 
-  void exec() {
-    while (stackFrames.last != null) {
+  void exec({bool saveLastFrame = false}) {
+    while (stackFrames.isNotEmpty) {
       stackFrames.last.func.instructionStream
           .forEach((x) => _opcodes[x.name].exec(x.A, x.B, x.C, this));
+
+      if (stackFrames.length == 1 && saveLastFrame) {
+        return;
+      }
 
       stackFrames.removeLast();
     }
   }
 
-  void call(String funcName) {
+  void call(String funcName, {bool saveLastFrame = false}) {
     stackFrames.add(StackFrame(func: functions[funcName]));
-    exec();
+    exec(saveLastFrame: saveLastFrame);
   }
 }
 
