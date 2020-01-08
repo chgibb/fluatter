@@ -7,12 +7,13 @@ class Func {
   final int slots;
   final int numupvalues;
   final int locals;
-  final int constants;
+  final int numconstants;
   final int functions;
 
   final List<Instruction> instructionStream;
 
   final Map<int, dynamic> upvalues;
+  final Map<dynamic, dynamic> constants;
 
   Func(
       {@required this.name,
@@ -20,8 +21,9 @@ class Func {
       @required this.slots,
       @required this.numupvalues,
       @required this.locals,
-      @required this.constants,
+      @required this.numconstants,
       @required this.functions,
       @required this.instructionStream,
-      @required this.upvalues});
+      @required this.upvalues,
+      @required this.constants});
 }

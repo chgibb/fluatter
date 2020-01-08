@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:fluatter/src/func.dart';
 import 'package:fluatter/src/instruction.dart';
-import 'package:fluatter/src/lua.dart';
+import 'package:fluatter/src/vm.dart';
 import 'package:fluatter/src/util/nextNonEmptyElement.dart';
 
 enum _ParseState {
@@ -42,11 +42,12 @@ Interpreter interpreterFromListing(String listing) {
   int slots;
   int numupvalues;
   int locals;
-  int constants;
+  int numconstants;
   int functions;
   int params;
   List<Instruction> instructions = [];
   Map<int, dynamic> upvalues = {};
+  Map<dynamic, dynamic> constants = {};
 
   var flushFunction = () {
     interpreter.addFunction(Func(
@@ -54,20 +55,23 @@ Interpreter interpreterFromListing(String listing) {
         slots: slots,
         numupvalues: numupvalues,
         locals: locals,
-        constants: constants,
+        numconstants: numconstants,
         functions: functions,
         params: params,
         instructionStream: instructions,
-        upvalues: upvalues));
+        upvalues: upvalues,
+        constants: constants));
 
     funcName = "";
     slots = 0;
     numupvalues = 0;
     locals = 0;
-    constants = 0;
+    numconstants = 0;
     functions = 0;
     params = 0;
     instructions = [];
+    upvalues = {};
+    constants = {};
   };
 
   for (var i = 0; i != lines.length; ++i) {
@@ -91,7 +95,7 @@ Interpreter interpreterFromListing(String listing) {
         slots = int.parse(tokens[2]);
         numupvalues = int.parse(tokens[4]);
         locals = int.parse(tokens[6]);
-        constants = int.parse(tokens[8]);
+        numconstants = int.parse(tokens[8]);
         functions = int.parse(tokens[10]);
         parseState = _ParseState.parsingFunctionBody;
         break;
@@ -110,10 +114,6 @@ Interpreter interpreterFromListing(String listing) {
         break;
 
       case _ParseState.parsingConstants:
-        if (instructions.isNotEmpty) {
-          flushFunction();
-        }
-
         List<String> tokens = lines[i].split(RegExp("\\s"));
         var index = nextNonEmptyElement(tokens, 0);
 
@@ -122,25 +122,18 @@ Interpreter interpreterFromListing(String listing) {
         if (val[0] == "\"") {
           val = val.substring(1, val.length);
           val = val.substring(0, val.length - 1);
-          interpreter.writeConstant(int.tryParse(index.element), val);
+
+          constants[int.tryParse(index.element)] = val;
           break;
         }
 
-        interpreter.writeConstant(
-            int.tryParse(index.element), int.tryParse(val));
-
+        constants[int.tryParse(index.element)] = int.tryParse(val);
         break;
 
       case _ParseState.parsingLocals:
-        if (instructions.isNotEmpty) {
-          flushFunction();
-        }
         break;
 
       case _ParseState.parsingUpvalues:
-        if (instructions.isNotEmpty) {
-          flushFunction();
-        }
         List<String> tokens = lines[i].split(RegExp("\\s"));
 
         var key = nextNonEmptyElement(tokens, 0);
@@ -148,6 +141,10 @@ Interpreter interpreterFromListing(String listing) {
             Map<dynamic, dynamic>();
         break;
     }
+  }
+
+  if (instructions.isNotEmpty) {
+    flushFunction();
   }
 
   return interpreter;

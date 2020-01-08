@@ -5,11 +5,10 @@ import 'package:flutter/widgets.dart';
 
 class Interpreter {
   Map<dynamic, dynamic> _registers = {};
-  Map<dynamic, dynamic> _constants = {};
   Map<dynamic, dynamic> _globalSymbols = {};
 
   dynamic R(dynamic i) => _registers[i];
-  dynamic Kst(dynamic n) => _constants[n];
+  dynamic Kst(dynamic n, Func func) => func.constants[n];
   dynamic Gbl(dynamic sym) => _globalSymbols[sym];
   dynamic Upvalue(dynamic n, StackFrame stackFrame) => stackFrame.upvalues[n];
   dynamic RK(dynamic i) => _registers[i] != null ? _registers[i] : Gbl(i);
@@ -17,24 +16,24 @@ class Interpreter {
   Map<String, OpCode> _opcodes = {};
 
   @visibleForTesting
-  Map<String, Func> functions = {};
+  Map<String, Func> closures = {};
 
   @visibleForTesting
   List<StackFrame> stackFrames = [];
 
-  void writeConstant(int key, dynamic val) {
-    _constants[key] = val;
-  }
-
   void addFunction(Func func) {
-    functions[func.name] = func;
+    closures[func.name] = func;
   }
 
   //https://the-ravi-programming-language.readthedocs.io/en/latest/lua_bytecode_reference.html
   Interpreter() {
     _opcodes["SETTABUP"] =
         OpCode(exec: (int A, int B, int C, Interpreter interpreter) {
-      _registers = {A: A, B: _constants[B.abs()], C: _constants[C.abs()]};
+      _registers = {
+        A: A,
+        B: Kst(B.abs(), interpreter.stackFrames.last.func),
+        C: Kst(C.abs(), interpreter.stackFrames.last.func)
+      };
 
       interpreter.Upvalue(A, interpreter.stackFrames.last)[interpreter.RK(B)] =
           interpreter.RK(C);
@@ -58,7 +57,7 @@ class Interpreter {
   }
 
   void call(String funcName, {bool saveLastFrame = false}) {
-    stackFrames.add(StackFrame(func: functions[funcName]));
+    stackFrames.add(StackFrame(func: closures[funcName]));
     exec(saveLastFrame: saveLastFrame);
   }
 }

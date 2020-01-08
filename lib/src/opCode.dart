@@ -1,4 +1,4 @@
-import 'package:fluatter/src/lua.dart';
+import 'package:fluatter/src/vm.dart';
 import 'package:flutter/foundation.dart';
 
 class OpCode {

@@ -15,14 +15,14 @@ void main() {
     var interpreter =
         interpreterFromListing(File("fixtures/abc.txt").readAsStringSync());
 
-    Func mainFunc = interpreter.functions["main"];
+    Func mainFunc = interpreter.closures["main"];
 
     expect(mainFunc, isNotNull);
     expect(mainFunc.name, "main");
     expect(mainFunc.slots, 2);
     expect(mainFunc.numupvalues, 1);
     expect(mainFunc.locals, 0);
-    expect(mainFunc.constants, 6);
+    expect(mainFunc.numconstants, 6);
     expect(mainFunc.functions, 0);
     expect(mainFunc.instructionStream.length, 4);
 
