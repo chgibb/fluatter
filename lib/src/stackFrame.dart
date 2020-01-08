@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 class StackFrame {
   final Func func;
   final Map<int, dynamic> _upvalues;
+  Map<int, dynamic> registers = {};
 
   Map<int, dynamic> get upvalues => _upvalues;
 

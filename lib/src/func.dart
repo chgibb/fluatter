@@ -13,7 +13,7 @@ class Func {
   final List<Instruction> instructionStream;
 
   final Map<int, dynamic> upvalues;
-  final Map<dynamic, dynamic> constants;
+  final Map<int, dynamic> constants;
 
   Func(
       {@required this.name,

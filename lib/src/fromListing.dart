@@ -47,10 +47,10 @@ Interpreter interpreterFromListing(String listing) {
   int params;
   List<Instruction> instructions = [];
   Map<int, dynamic> upvalues = {};
-  Map<dynamic, dynamic> constants = {};
+  Map<int, dynamic> constants = {};
 
   var flushFunction = () {
-    interpreter.addFunction(Func(
+    Func func = Func(
         name: funcName,
         slots: slots,
         numupvalues: numupvalues,
@@ -60,8 +60,12 @@ Interpreter interpreterFromListing(String listing) {
         params: params,
         instructionStream: instructions,
         upvalues: upvalues,
-        constants: constants));
-
+        constants: constants);
+    if (func.name == "main") {
+      interpreter.mainFunc = func;
+    } else {
+      interpreter.addClosure(func);
+    }
     funcName = "";
     slots = 0;
     numupvalues = 0;

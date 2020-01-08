@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:fluatter/src/fromListing.dart';
+import 'package:fluatter/src/func.dart';
 import 'package:fluatter/src/vm.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -23,5 +24,8 @@ end
 
     var interpreter = interpreterFromListing(
         File("fixtures/abc-foo-bar.txt").readAsStringSync());
+
+    Func foo = interpreter.closures["foo"];
+    expect(foo, isNotNull);
   });
 }

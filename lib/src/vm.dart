@@ -4,16 +4,22 @@ import 'package:fluatter/src/stackFrame.dart';
 import 'package:flutter/widgets.dart';
 
 class Interpreter {
-  Map<dynamic, dynamic> _registers = {};
   Map<dynamic, dynamic> _globalSymbols = {};
 
-  dynamic R(dynamic i) => _registers[i];
-  dynamic Kst(dynamic n, Func func) => func.constants[n];
+  dynamic R(int i, StackFrame stackFrame) {
+    return stackFrame.registers[i];
+  }
+
+  dynamic Kst(int n, Func func) => func.constants[n];
   dynamic Gbl(dynamic sym) => _globalSymbols[sym];
   dynamic Upvalue(dynamic n, StackFrame stackFrame) => stackFrame.upvalues[n];
-  dynamic RK(dynamic i) => _registers[i] != null ? _registers[i] : Gbl(i);
+  dynamic RK(int i, StackFrame stackFrame) => stackFrame.registers[i] != null
+      ? stackFrame.registers[i]
+      : Kst(i, stackFrame.func) != null ? Kst(i, stackFrame.func) : Gbl(i);
 
   Map<String, OpCode> _opcodes = {};
+
+  Func mainFunc;
 
   @visibleForTesting
   Map<String, Func> closures = {};
@@ -21,7 +27,7 @@ class Interpreter {
   @visibleForTesting
   List<StackFrame> stackFrames = [];
 
-  void addFunction(Func func) {
+  void addClosure(Func func) {
     closures[func.name] = func;
   }
 
@@ -29,14 +35,14 @@ class Interpreter {
   Interpreter() {
     _opcodes["SETTABUP"] =
         OpCode(exec: (int A, int B, int C, Interpreter interpreter) {
-      _registers = {
-        A: A,
-        B: Kst(B.abs(), interpreter.stackFrames.last.func),
-        C: Kst(C.abs(), interpreter.stackFrames.last.func)
-      };
+      StackFrame stackFrame = interpreter.stackFrames.last;
 
-      interpreter.Upvalue(A, interpreter.stackFrames.last)[interpreter.RK(B)] =
-          interpreter.RK(C);
+      stackFrame.registers[1] = Kst(B.abs(), stackFrame.func);
+      stackFrame.registers[2] = Kst(C.abs(), stackFrame.func);
+
+      interpreter.Upvalue(A, interpreter.stackFrames.last)[
+              interpreter.RK(B.abs(), interpreter.stackFrames.last)] =
+          interpreter.RK(C.abs(), interpreter.stackFrames.last);
     });
 
     _opcodes["RETURN"] =
@@ -57,7 +63,8 @@ class Interpreter {
   }
 
   void call(String funcName, {bool saveLastFrame = false}) {
-    stackFrames.add(StackFrame(func: closures[funcName]));
+    stackFrames.add(
+        StackFrame(func: funcName != "main" ? closures[funcName] : mainFunc));
     exec(saveLastFrame: saveLastFrame);
   }
 }

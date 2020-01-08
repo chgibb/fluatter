@@ -15,7 +15,7 @@ void main() {
     var interpreter =
         interpreterFromListing(File("fixtures/abc.txt").readAsStringSync());
 
-    Func mainFunc = interpreter.closures["main"];
+    Func mainFunc = interpreter.mainFunc;
 
     expect(mainFunc, isNotNull);
     expect(mainFunc.name, "main");
@@ -52,5 +52,5 @@ void main() {
     expect(interpreter.stackFrames[0].func.upvalues[0]["a"], 1);
     expect(interpreter.stackFrames[0].func.upvalues[0]["b"], 2);
     expect(interpreter.stackFrames[0].func.upvalues[0]["c"], 3);
-  });
+  }, timeout: Timeout(Duration(minutes: 10)));
 }
