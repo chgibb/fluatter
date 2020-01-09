@@ -30,7 +30,7 @@ end
     expect(mainFunc.constants[1], "foo");
     expect(mainFunc.constants[2], "bar");
 
-    var foo = interpreter.closures["0x55566bee9990"];
+    var foo = interpreter.findFuncByName("0x55566bee9990");
     expect(foo, isNotNull);
     expect(foo.constants.length, 4);
     expect(foo.constants[0], null);
@@ -38,7 +38,7 @@ end
     expect(foo.constants[2], 2);
     expect(foo.constants[3], 3);
 
-    var bar = interpreter.closures["0x55566bee9fe0"];
+    var bar = interpreter.findFuncByName("0x55566bee9fe0");
     expect(bar, isNotNull);
     expect(bar.constants.length, 4);
     expect(bar.constants[0], null);

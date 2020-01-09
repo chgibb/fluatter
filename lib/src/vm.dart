@@ -23,12 +23,12 @@ class Interpreter {
 
   Func mainFunc;
 
-  Map<String, Func> closures = {};
+  List<Func> closures = [];
 
   List<StackFrame> stackFrames = [];
 
   void addClosure(Func func) {
-    closures[func.name] = func;
+    closures.add(func);
   }
 
   //https://the-ravi-programming-language.readthedocs.io/en/latest/lua_bytecode_reference.html
@@ -51,9 +51,14 @@ class Interpreter {
     }
   }
 
+  Func findFuncByName(String funcName) {
+    return funcName != "main"
+        ? closures.firstWhere((x) => x.name == funcName)
+        : mainFunc;
+  }
+
   void call(String funcName, {bool saveLastFrame = false}) {
-    stackFrames.add(
-        StackFrame(func: funcName != "main" ? closures[funcName] : mainFunc));
+    stackFrames.add(StackFrame(func: findFuncByName(funcName)));
     exec(saveLastFrame: saveLastFrame);
   }
 }
