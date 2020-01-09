@@ -1,5 +1,7 @@
 import 'package:fluatter/src/func.dart';
 import 'package:fluatter/src/opCode.dart';
+import 'package:fluatter/src/opCodes/return.dart';
+import 'package:fluatter/src/opCodes/settabup.dart';
 import 'package:fluatter/src/stackFrame.dart';
 import 'package:flutter/widgets.dart';
 
@@ -24,7 +26,6 @@ class Interpreter {
   @visibleForTesting
   Map<String, Func> closures = {};
 
-  @visibleForTesting
   List<StackFrame> stackFrames = [];
 
   void addClosure(Func func) {
@@ -33,20 +34,9 @@ class Interpreter {
 
   //https://the-ravi-programming-language.readthedocs.io/en/latest/lua_bytecode_reference.html
   Interpreter() {
-    _opcodes["SETTABUP"] =
-        OpCode(exec: (int A, int B, int C, Interpreter interpreter) {
-      StackFrame stackFrame = interpreter.stackFrames.last;
+    _opcodes["SETTABUP"] = setabbup;
 
-      stackFrame.registers[1] = Kst(B.abs(), stackFrame.func);
-      stackFrame.registers[2] = Kst(C.abs(), stackFrame.func);
-
-      interpreter.Upvalue(A, interpreter.stackFrames.last)[
-              interpreter.RK(B.abs(), interpreter.stackFrames.last)] =
-          interpreter.RK(C.abs(), interpreter.stackFrames.last);
-    });
-
-    _opcodes["RETURN"] =
-        OpCode(exec: (int A, int B, int C, Interpreter interpreter) {});
+    _opcodes["RETURN"] = $return;
   }
 
   void exec({bool saveLastFrame = false}) {
