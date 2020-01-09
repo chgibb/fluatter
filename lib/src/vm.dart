@@ -32,6 +32,7 @@ class Interpreter {
   }
 
   //https://the-ravi-programming-language.readthedocs.io/en/latest/lua_bytecode_reference.html
+  //http://luaforge.net/docman/83/98/ANoFrillsIntroToLua51VMInstructions.pdf
   Interpreter() {
     _opcodes["SETTABUP"] = setabbup;
     _opcodes["CLOSURE"] = closure;
