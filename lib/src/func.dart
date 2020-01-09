@@ -2,7 +2,7 @@ import 'package:fluatter/src/instruction.dart';
 import 'package:flutter/foundation.dart';
 
 class Func {
-  final String name;
+  String name;
   final int params;
   final int slots;
   final int numupvalues;

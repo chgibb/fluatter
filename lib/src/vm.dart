@@ -1,9 +1,9 @@
 import 'package:fluatter/src/func.dart';
 import 'package:fluatter/src/opCode.dart';
+import 'package:fluatter/src/opCodes/closure.dart';
 import 'package:fluatter/src/opCodes/return.dart';
 import 'package:fluatter/src/opCodes/settabup.dart';
 import 'package:fluatter/src/stackFrame.dart';
-import 'package:flutter/widgets.dart';
 
 class Interpreter {
   Map<dynamic, dynamic> _globalSymbols = {};
@@ -23,7 +23,6 @@ class Interpreter {
 
   Func mainFunc;
 
-  @visibleForTesting
   Map<String, Func> closures = {};
 
   List<StackFrame> stackFrames = [];
@@ -35,7 +34,7 @@ class Interpreter {
   //https://the-ravi-programming-language.readthedocs.io/en/latest/lua_bytecode_reference.html
   Interpreter() {
     _opcodes["SETTABUP"] = setabbup;
-
+    _opcodes["CLOSURE"] = closure;
     _opcodes["RETURN"] = $return;
   }
 

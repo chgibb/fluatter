@@ -46,5 +46,8 @@ end
     expect(bar.constants[2], 2);
     expect(bar.constants[3], 3);
     interpreter.call("main", saveLastFrame: true);
+
+    expect(foo.name, "foo");
+    expect(bar.name, "bar");
   });
 }
