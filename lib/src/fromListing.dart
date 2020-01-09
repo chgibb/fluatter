@@ -54,7 +54,7 @@ Interpreter interpreterFromListing(String listing) {
         name: funcName,
         slots: slots,
         numupvalues: numupvalues,
-        locals: locals,
+        numlocals: locals,
         numconstants: numconstants,
         functions: functions,
         params: params,

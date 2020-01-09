@@ -6,7 +6,7 @@ class Func {
   final int params;
   final int slots;
   final int numupvalues;
-  final int locals;
+  final int numlocals;
   final int numconstants;
   final int functions;
 
@@ -20,7 +20,7 @@ class Func {
       @required this.params,
       @required this.slots,
       @required this.numupvalues,
-      @required this.locals,
+      @required this.numlocals,
       @required this.numconstants,
       @required this.functions,
       @required this.instructionStream,

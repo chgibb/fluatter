@@ -21,7 +21,7 @@ void main() {
     expect(mainFunc.name, "main");
     expect(mainFunc.slots, 2);
     expect(mainFunc.numupvalues, 1);
-    expect(mainFunc.locals, 0);
+    expect(mainFunc.numlocals, 0);
     expect(mainFunc.numconstants, 6);
     expect(mainFunc.functions, 0);
     expect(mainFunc.instructionStream.length, 4);
