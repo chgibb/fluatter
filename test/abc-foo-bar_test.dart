@@ -1,8 +1,6 @@
 import 'dart:io';
 
 import 'package:fluatter/src/fromListing.dart';
-import 'package:fluatter/src/func.dart';
-import 'package:fluatter/src/vm.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -47,5 +45,6 @@ end
     expect(bar.constants[1], 1);
     expect(bar.constants[2], 2);
     expect(bar.constants[3], 3);
+    interpreter.call("main", saveLastFrame: true);
   });
 }
