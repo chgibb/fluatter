@@ -41,7 +41,7 @@ class Interpreter {
   void exec({bool saveLastFrame = false}) {
     while (stackFrames.isNotEmpty) {
       stackFrames.last.func.instructionStream
-          .forEach((x) => _opcodes[x.name].exec(x.A, x.B, x.C, this));
+          .forEach((x) => _opcodes[x.name].exec(x.registerConstants, this));
 
       if (stackFrames.length == 1 && saveLastFrame) {
         return;

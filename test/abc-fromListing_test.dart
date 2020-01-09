@@ -27,24 +27,24 @@ void main() {
     expect(mainFunc.instructionStream.length, 4);
 
     expect(mainFunc.instructionStream[0].name, "SETTABUP");
-    expect(mainFunc.instructionStream[0].A, 0);
-    expect(mainFunc.instructionStream[0].B, -1);
-    expect(mainFunc.instructionStream[0].C, -2);
+    expect(mainFunc.instructionStream[0].registerConstants[0], 0);
+    expect(mainFunc.instructionStream[0].registerConstants[1], -1);
+    expect(mainFunc.instructionStream[0].registerConstants[2], -2);
 
     expect(mainFunc.instructionStream[1].name, "SETTABUP");
-    expect(mainFunc.instructionStream[1].A, 0);
-    expect(mainFunc.instructionStream[1].B, -3);
-    expect(mainFunc.instructionStream[1].C, -4);
+    expect(mainFunc.instructionStream[1].registerConstants[0], 0);
+    expect(mainFunc.instructionStream[1].registerConstants[1], -3);
+    expect(mainFunc.instructionStream[1].registerConstants[2], -4);
 
     expect(mainFunc.instructionStream[2].name, "SETTABUP");
-    expect(mainFunc.instructionStream[2].A, 0);
-    expect(mainFunc.instructionStream[2].B, -5);
-    expect(mainFunc.instructionStream[2].C, -6);
+    expect(mainFunc.instructionStream[2].registerConstants[0], 0);
+    expect(mainFunc.instructionStream[2].registerConstants[1], -5);
+    expect(mainFunc.instructionStream[2].registerConstants[2], -6);
 
     expect(mainFunc.instructionStream[3].name, "RETURN");
-    expect(mainFunc.instructionStream[3].A, 0);
-    expect(mainFunc.instructionStream[3].B, 1);
-    expect(mainFunc.instructionStream[3].C, 0);
+    expect(mainFunc.instructionStream[3].registerConstants[0], 0);
+    expect(mainFunc.instructionStream[3].registerConstants[1], 1);
+    expect(mainFunc.instructionStream[3].registerConstants[2], 0);
 
     interpreter.call("main", saveLastFrame: true);
 

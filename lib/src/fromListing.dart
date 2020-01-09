@@ -117,9 +117,11 @@ Interpreter interpreterFromListing(String listing) {
         var c = nextNonEmptyElement(tokens, b.i + 1);
         instructions.add(Instruction(
           name: tokens[3],
-          A: int.tryParse(a.element) ?? 0,
-          B: int.tryParse(b.element) ?? 0,
-          C: int.tryParse(c?.element ?? "") ?? 0,
+          registerConstants: [
+            int.tryParse(a.element) ?? 0,
+            int.tryParse(b.element) ?? 0,
+            int.tryParse(c?.element ?? "") ?? 0
+          ],
         ));
         break;
 
