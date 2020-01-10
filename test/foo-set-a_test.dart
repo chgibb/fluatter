@@ -17,10 +17,16 @@ end
     var interpreter = interpreterFromListing(
         File("fixtures/foo-set-a.txt").readAsStringSync());
 
-    interpreter.call("main", saveLastFrame: true);
+    interpreter.call("main");
     var upvalues = interpreter.upvalues;
     expect(upvalues, isNotNull);
     expect(upvalues[0]["a"], isNotNull);
     expect(upvalues[0]["a"], 0);
+
+    interpreter.call("foo");
+    upvalues = interpreter.upvalues;
+    expect(upvalues, isNotNull);
+    expect(upvalues[0]["a"], isNotNull);
+    expect(upvalues[0]["a"], 1);
   });
 }
