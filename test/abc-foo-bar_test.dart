@@ -49,5 +49,7 @@ end
 
     expect(foo.name, "foo");
     expect(bar.name, "bar");
+
+    interpreter.call("foo");
   });
 }

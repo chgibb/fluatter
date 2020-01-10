@@ -1,6 +1,7 @@
 import 'package:fluatter/src/func.dart';
 import 'package:fluatter/src/opCode.dart';
 import 'package:fluatter/src/opCodes/closure.dart';
+import 'package:fluatter/src/opCodes/loadk.dart';
 import 'package:fluatter/src/opCodes/return.dart';
 import 'package:fluatter/src/opCodes/settabup.dart';
 import 'package:fluatter/src/stackFrame.dart';
@@ -36,6 +37,7 @@ class Interpreter {
   Interpreter() {
     _opcodes["SETTABUP"] = setabbup;
     _opcodes["CLOSURE"] = closure;
+    _opcodes["LOADK"] = loadk;
     _opcodes["RETURN"] = $return;
   }
 
