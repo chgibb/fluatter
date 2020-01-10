@@ -1,0 +1,25 @@
+
+main <fixtures/foo-set-a.lua:0,0> (4 instructions at 0x559a5823e700)
+0+ params, 2 slots, 1 upvalue, 0 locals, 3 constants, 1 function
+	1	[1]	SETTABUP 	0 -1 -2	; _ENV "a" 0
+	2	[5]	CLOSURE  	0 0	; 0x559a5823eac0
+	3	[3]	SETTABUP 	0 -3 0	; _ENV "foo"
+	4	[5]	RETURN   	0 1
+constants (3) for 0x559a5823e700:
+	1	"a"
+	2	0
+	3	"foo"
+locals (0) for 0x559a5823e700:
+upvalues (1) for 0x559a5823e700:
+	0	_ENV	1	0
+
+function <fixtures/foo-set-a.lua:3,5> (2 instructions at 0x559a5823eac0)
+0 params, 2 slots, 1 upvalue, 0 locals, 2 constants, 0 functions
+	1	[4]	SETTABUP 	0 -1 -2	; _ENV "a" 1
+	2	[5]	RETURN   	0 1
+constants (2) for 0x559a5823eac0:
+	1	"a"
+	2	1
+locals (0) for 0x559a5823eac0:
+upvalues (1) for 0x559a5823eac0:
+	0	_ENV	0	0
