@@ -28,6 +28,8 @@ class Interpreter {
 
   List<StackFrame> stackFrames = [];
 
+  Map<int, dynamic> get upvalues => stackFrames.last?.upvalues;
+
   void addClosure(Func func) {
     closures.add(func);
   }
@@ -41,7 +43,7 @@ class Interpreter {
     _opcodes["RETURN"] = $return;
   }
 
-  List<dynamic> exec({bool saveLastFrame = false}) {
+  List<dynamic> exec({bool saveLastFrame = true}) {
     while (stackFrames.isNotEmpty) {
       stackFrames.last.func.instructionStream
           .forEach((x) => _opcodes[x.name].exec(x.registerConstants, this));
@@ -70,7 +72,10 @@ class Interpreter {
         : mainFunc;
   }
 
-  List<dynamic> call(String funcName, {bool saveLastFrame = false}) {
+  List<dynamic> call(String funcName, {bool saveLastFrame = true}) {
+    if (stackFrames.isNotEmpty) {
+      stackFrames.removeLast();
+    }
     stackFrames.add(StackFrame(func: findFuncByName(funcName)));
     return exec(saveLastFrame: saveLastFrame);
   }

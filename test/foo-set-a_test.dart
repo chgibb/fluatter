@@ -18,7 +18,7 @@ end
         File("fixtures/foo-set-a.txt").readAsStringSync());
 
     interpreter.call("main", saveLastFrame: true);
-    var upvalues = interpreter.stackFrames.last.upvalues;
+    var upvalues = interpreter.upvalues;
     expect(upvalues, isNotNull);
     expect(upvalues[0]["a"], isNotNull);
     expect(upvalues[0]["a"], 0);
