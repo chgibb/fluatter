@@ -50,6 +50,7 @@ end
     expect(foo.name, "foo");
     expect(bar.name, "bar");
 
-    interpreter.call("foo");
+    var res = interpreter.call("foo");
+    expect(res, null);
   });
 }

@@ -41,17 +41,27 @@ class Interpreter {
     _opcodes["RETURN"] = $return;
   }
 
-  void exec({bool saveLastFrame = false}) {
+  List<dynamic> exec({bool saveLastFrame = false}) {
     while (stackFrames.isNotEmpty) {
       stackFrames.last.func.instructionStream
           .forEach((x) => _opcodes[x.name].exec(x.registerConstants, this));
 
-      if (stackFrames.length == 1 && saveLastFrame) {
-        return;
+      if (stackFrames.length == 1) {
+        if (stackFrames.last.func.instructionStream.last.name == "RETURN") {
+          if (stackFrames
+                  .last.func.instructionStream.last.registerConstants[1] ==
+              1) {
+            if (!saveLastFrame) {
+              stackFrames.removeLast();
+            }
+            return null;
+          }
+        }
       }
 
       stackFrames.removeLast();
     }
+    return null;
   }
 
   Func findFuncByName(String funcName) {
@@ -60,8 +70,8 @@ class Interpreter {
         : mainFunc;
   }
 
-  void call(String funcName, {bool saveLastFrame = false}) {
+  List<dynamic> call(String funcName, {bool saveLastFrame = false}) {
     stackFrames.add(StackFrame(func: findFuncByName(funcName)));
-    exec(saveLastFrame: saveLastFrame);
+    return exec(saveLastFrame: saveLastFrame);
   }
 }
