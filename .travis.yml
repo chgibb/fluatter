@@ -70,7 +70,7 @@ before_script:
   - git clone https://github.com/flutter/flutter.git -b beta --depth 1
   
   # Add Flutter to the PATH environment variable.
-  - export PATH=`pwd`/flutter/bin:`pwd`/flutter/bin/cache/dart-sdk
+  - export PATH=$PATH:flutter/bin/cache/dart-sdk
   
 script:
   # Prints the flutter version
