@@ -9,8 +9,10 @@ OpCode eq =
   int B = registerConstants[1];
   int C = registerConstants[2];
 
-  if ((interpreter.RK(B, stackFrame) == interpreter.RK(C, stackFrame)) !=
-      (A == 0 ? false : true)) {
+  var l = stackFrame.registers[B];
+  var r = interpreter.Kst(C.abs(), stackFrame.func);
+
+  if ((l == r) != (A == 0 ? false : true)) {
     stackFrame.pc++;
   }
 });

@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:fluatter/src/fromListing.dart';
-import 'package:fluatter/src/vm.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

@@ -1,5 +1,6 @@
 import 'package:fluatter/src/func.dart';
 import 'package:fluatter/src/opCode.dart';
+import 'package:fluatter/src/opCodes/call.dart';
 import 'package:fluatter/src/opCodes/closure.dart';
 import 'package:fluatter/src/opCodes/eq.dart';
 import 'package:fluatter/src/opCodes/gettabup.dart';
@@ -23,9 +24,7 @@ class Interpreter {
   // ignore: non_constant_identifier_names
   dynamic Upvalue(dynamic n, StackFrame stackFrame) => stackFrame.upvalues[n];
   // ignore: non_constant_identifier_names
-  dynamic RK(int i, StackFrame stackFrame) => stackFrame.registers[i] != null
-      ? stackFrame.registers[i]
-      : Kst(i, stackFrame.func) != null ? Kst(i, stackFrame.func) : Gbl(i);
+  dynamic RK(int i, StackFrame stackFrame) => Kst(i, stackFrame.func);
 
   Map<String, OpCode> _opcodes = {};
 
@@ -45,23 +44,21 @@ class Interpreter {
   //http://luaforge.net/docman/83/98/ANoFrillsIntroToLua51VMInstructions.pdf
   Interpreter() {
     _opcodes["SETTABUP"] = setabbup;
-    _opcodes["GETTABUP"] = getabbup;
+    _opcodes["GETTABUP"] = gettabup;
     _opcodes["CLOSURE"] = closure;
     _opcodes["LOADK"] = loadk;
     _opcodes["EQ"] = eq;
     _opcodes["JMP"] = jmp;
+    _opcodes["CALL"] = $call;
     _opcodes["RETURN"] = $return;
   }
 
   List<dynamic> exec({bool saveLastFrame = true}) {
     while (stackFrames.isNotEmpty) {
-      //   stackFrames.last.func.instructionStream
-      //       .forEach((x) => _opcodes[x.name].exec(x.registerConstants, this));
-
       while (stackFrames.last.pc !=
           stackFrames.last.func.instructionStream.length) {
         var inst = stackFrames.last.func.instructionStream[stackFrames.last.pc];
-        print(inst.name);
+
         _opcodes[inst.name].exec(inst.registerConstants, this);
 
         ++stackFrames.last.pc;
