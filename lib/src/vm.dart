@@ -1,6 +1,8 @@
 import 'package:fluatter/src/func.dart';
 import 'package:fluatter/src/opCode.dart';
 import 'package:fluatter/src/opCodes/closure.dart';
+import 'package:fluatter/src/opCodes/eq.dart';
+import 'package:fluatter/src/opCodes/jmp.dart';
 import 'package:fluatter/src/opCodes/loadk.dart';
 import 'package:fluatter/src/opCodes/return.dart';
 import 'package:fluatter/src/opCodes/settabup.dart';
@@ -44,6 +46,8 @@ class Interpreter {
     _opcodes["SETTABUP"] = setabbup;
     _opcodes["CLOSURE"] = closure;
     _opcodes["LOADK"] = loadk;
+    _opcodes["EQ"] = eq;
+    _opcodes["JMP"] = jmp;
     _opcodes["RETURN"] = $return;
   }
 
@@ -55,6 +59,7 @@ class Interpreter {
       while (stackFrames.last.pc !=
           stackFrames.last.func.instructionStream.length) {
         var inst = stackFrames.last.func.instructionStream[stackFrames.last.pc];
+        print(inst.name);
         _opcodes[inst.name].exec(inst.registerConstants, this);
 
         ++stackFrames.last.pc;
