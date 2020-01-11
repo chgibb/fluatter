@@ -49,8 +49,16 @@ class Interpreter {
 
   List<dynamic> exec({bool saveLastFrame = true}) {
     while (stackFrames.isNotEmpty) {
-      stackFrames.last.func.instructionStream
-          .forEach((x) => _opcodes[x.name].exec(x.registerConstants, this));
+      //   stackFrames.last.func.instructionStream
+      //       .forEach((x) => _opcodes[x.name].exec(x.registerConstants, this));
+
+      while (stackFrames.last.pc !=
+          stackFrames.last.func.instructionStream.length) {
+        var inst = stackFrames.last.func.instructionStream[stackFrames.last.pc];
+        _opcodes[inst.name].exec(inst.registerConstants, this);
+
+        ++stackFrames.last.pc;
+      }
 
       if (stackFrames.length == 1) {
         if (stackFrames.last.func.instructionStream.last.name == "RETURN") {
