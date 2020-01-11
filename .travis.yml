@@ -1,63 +1,19 @@
-#Adapted from
-#https://gist.github.com/NBTX/ebb0717e7d731a3b655c4c67b1708b3a#file-travis-yml
-#https://gist.github.com/NBTX/e4150e3d552af482d08524408e51182c#file-travis-yml
-os: linux
-
-dist: trusty
-jdk: oraclejdk8
-
-language: node_js
-node_js:
-  - "12"
-
-env:
-  global:
-    - ANDROID_SDK_ROOT=/opt/android
-
-sudo: required
-
+os:
+  - linux
+sudo: false
 addons:
   apt:
+    # Flutter depends on /usr/lib/x86_64-linux-gnu/libstdc++.so.6 version GLIBCXX_3.4.18
     sources:
-      - ubuntu-toolchain-r-test 
+      - ubuntu-toolchain-r-test # if we don't specify this, the libstdc++6 we get is the wrong version
     packages:
-      - lib32stdc++6 # https://github.com/flutter/flutter/issues/6207
       - libstdc++6
-      - curl
-
-cache:
-  directories:
-    - $HOME/.pub-cache
-    - node_modules
-
+      - fonts-droid
 before_script:
-  - wget https://services.gradle.org/distributions/gradle-4.10.3-bin.zip
-  - unzip -qq gradle-4.10.3-bin.zip
-  - export GRADLE_HOME=`pwd`/gradle-4.10.3
-  - export PATH=$GRADLE_HOME/bin:$PATH
-
-  - mkdir -p /home/travis/.android
-  - echo 'count=0' > /home/travis/.android/repositories.cfg
-
-  - wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
-  - mkdir android-sdk-tools
-  - unzip -qq sdk-tools-linux-4333796.zip -d android-sdk-tools
-  - export PATH=`pwd`/android-sdk-tools/tools/bin:$PATH
-  - mkdir -p $ANDROID_SDK_ROOT
-  
-  - yes | sdkmanager --sdk_root=$ANDROID_SDK_ROOT "tools" "build-tools;28.0.3" "extras;android;m2repository" > /dev/null
-  - export PATH=${ANDROID_SDK_ROOT}/tools/bin:$PATH
-
-  - sdkmanager --list
-
-  - (cd ../ && git clone https://github.com/flutter/flutter.git -b dev --depth 1)
-  
-  - cd ../  
-  - export PATH=$PATH:'pwd'/flutter/bin
-  - cd fluatter
-  
+  - git clone https://github.com/flutter/flutter.git -b beta
+  - ./flutter/bin/flutter doctor
 script:
-  - flutter precache
-  - flutter analyze lib test
-  - flutter format -n lib test
-  - flutter test
+  - ./flutter/bin/flutter precache
+  - ./flutter/bin/flutter analyze lib test
+  - ./flutter/bin/flutter format -n lib test
+  - ./flutter/bin/flutter test
