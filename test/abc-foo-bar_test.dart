@@ -50,14 +50,14 @@ end
     expect(foo.name, "foo");
     expect(bar.name, "bar");
 
-    var res = interpreter.call("foo",saveLastFrame: true);
+    var res = interpreter.call("foo", saveLastFrame: true);
     expect(res, null);
     expect(interpreter.stackFrames.last.registers[0], 1);
     expect(interpreter.stackFrames.last.registers[1], 2);
     expect(interpreter.stackFrames.last.registers[2], 3);
     interpreter.stackFrames.removeLast();
 
-    res = interpreter.call("bar",saveLastFrame: true);
+    res = interpreter.call("bar", saveLastFrame: true);
     expect(res, null);
     expect(interpreter.stackFrames.last.registers[0], 1);
     expect(interpreter.stackFrames.last.registers[1], 2);
