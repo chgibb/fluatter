@@ -50,9 +50,9 @@ before_script:
 
   - sdkmanager --list
 
-  - git clone https://github.com/flutter/flutter.git -b beta --depth 1
+  - cd ../ && git clone https://github.com/flutter/flutter.git -b dev --depth 1;
   
-  - export PATH=$PATH:flutter/bin
+  - cd ../ && export PATH=$PATH:flutter/bin;
   
 script:
   - flutter precache
