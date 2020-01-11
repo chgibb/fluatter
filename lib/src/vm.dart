@@ -13,9 +13,13 @@ class Interpreter {
     return stackFrame.registers[i];
   }
 
+  // ignore: non_constant_identifier_names
   dynamic Kst(int n, Func func) => func.constants[n];
+  // ignore: non_constant_identifier_names
   dynamic Gbl(dynamic sym) => _globalSymbols[sym];
+  // ignore: non_constant_identifier_names
   dynamic Upvalue(dynamic n, StackFrame stackFrame) => stackFrame.upvalues[n];
+  // ignore: non_constant_identifier_names
   dynamic RK(int i, StackFrame stackFrame) => stackFrame.registers[i] != null
       ? stackFrame.registers[i]
       : Kst(i, stackFrame.func) != null ? Kst(i, stackFrame.func) : Gbl(i);

@@ -3,5 +3,5 @@ import 'package:fluatter/src/vm.dart';
 
 OpCode $return =
     OpCode(exec: (List<int> registerConstants, Interpreter interpreter) {
-  int B = registerConstants[1];
+  //int B = registerConstants[1];
 });
