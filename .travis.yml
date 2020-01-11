@@ -56,5 +56,6 @@ before_script:
   
 script:
   - flutter precache
-  - flutter analyze
+  - flutter analyze lib test
   - flutter format -n lib test
+  - flutter test
