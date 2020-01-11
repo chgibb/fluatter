@@ -6,14 +6,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Eval abc from listing', () {
-    /*
-        ;Original file:
-        a = 1
-        b = 2
-        c = 3
-    */
     var interpreter =
-        interpreterFromListing(File("fixtures/abc.txt").readAsStringSync());
+        interpreterFromListing(File("fixtures/5.2.4/abc.txt").readAsStringSync());
 
     Func mainFunc = interpreter.mainFunc;
 

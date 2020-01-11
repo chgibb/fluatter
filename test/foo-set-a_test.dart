@@ -5,17 +5,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Eval abc-foo-bar from listing', () {
-/*
--- Original file:
-a = 0
-
-function foo()
-    a = 1
-end
-*/
-
     var interpreter = interpreterFromListing(
-        File("fixtures/foo-set-a.txt").readAsStringSync());
+        File("fixtures/5.2.4/foo-set-a.txt").readAsStringSync());
 
     interpreter.call("main");
     var upvalues = interpreter.upvalues;

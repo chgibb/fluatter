@@ -5,23 +5,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Eval abc-foo-bar from listing', () {
-/*
-;Original file:
-function foo()
-    local a = 1
-    local b = 2
-    local c = 3
-end
-
-function bar()
-    local a = 1
-    local b = 2
-    local c = 3
-end
-*/
-
     var interpreter = interpreterFromListing(
-        File("fixtures/abc-foo-bar.txt").readAsStringSync());
+        File("fixtures/5.2.4/abc-foo-bar.txt").readAsStringSync());
 
     var mainFunc = interpreter.mainFunc;
     expect(mainFunc, isNotNull);
