@@ -8,6 +8,7 @@ import 'package:fluatter/src/opCodes/jmp.dart';
 import 'package:fluatter/src/opCodes/loadk.dart';
 import 'package:fluatter/src/opCodes/return.dart';
 import 'package:fluatter/src/opCodes/settabup.dart';
+import 'package:fluatter/src/opCodes/sub.dart';
 import 'package:fluatter/src/stackFrame.dart';
 
 class Interpreter {
@@ -49,6 +50,7 @@ class Interpreter {
     _opcodes["LOADK"] = loadk;
     _opcodes["EQ"] = eq;
     _opcodes["JMP"] = jmp;
+    _opcodes["SUB"] = sub;
     _opcodes["CALL"] = $call;
     _opcodes["RETURN"] = $return;
   }
