@@ -10,6 +10,5 @@ void main() {
         File("fixtures/5.2.4/simple-factorial.txt").readAsStringSync());
 
     interpreter.call("main");
-    interpreter.call("factorial");
-  });
+  }, timeout: Timeout(Duration(minutes: 10)));
 }

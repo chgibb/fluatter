@@ -2,6 +2,7 @@ import 'package:fluatter/src/func.dart';
 import 'package:fluatter/src/opCode.dart';
 import 'package:fluatter/src/opCodes/closure.dart';
 import 'package:fluatter/src/opCodes/eq.dart';
+import 'package:fluatter/src/opCodes/gettabup.dart';
 import 'package:fluatter/src/opCodes/jmp.dart';
 import 'package:fluatter/src/opCodes/loadk.dart';
 import 'package:fluatter/src/opCodes/return.dart';
@@ -44,6 +45,7 @@ class Interpreter {
   //http://luaforge.net/docman/83/98/ANoFrillsIntroToLua51VMInstructions.pdf
   Interpreter() {
     _opcodes["SETTABUP"] = setabbup;
+    _opcodes["GETTABUP"] = getabbup;
     _opcodes["CLOSURE"] = closure;
     _opcodes["LOADK"] = loadk;
     _opcodes["EQ"] = eq;
