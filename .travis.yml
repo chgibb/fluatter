@@ -52,7 +52,9 @@ before_script:
 
   - (cd ../ && git clone https://github.com/flutter/flutter.git -b dev --depth 1)
   
-  - (cd ../ && export PATH=$PATH:flutter/bin)
+  - cd ../  
+  - export PATH=$PATH:flutter/bin
+  - cd fluatter
   
 script:
   - flutter precache
