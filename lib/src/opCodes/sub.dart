@@ -8,7 +8,10 @@ OpCode sub =
   int A = registerConstants[0];
   int B = registerConstants[1];
   int C = registerConstants[2];
+  print(stackFrame.registers);
 
   stackFrame.registers[A] =
       interpreter.RK(B.abs(), stackFrame) - interpreter.RK(C.abs(), stackFrame);
+
+  print(stackFrame.registers);
 });

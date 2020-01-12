@@ -8,4 +8,4 @@ function factorial (n)
     end
   end
 
-a = factorial(10)
+a = factorial(1)
