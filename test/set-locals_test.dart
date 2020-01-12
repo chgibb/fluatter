@@ -4,7 +4,7 @@ import 'package:fluatter/src/fromListing.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('Eval simple-factorial', () {
+  test('Eval set-locals', () {
     var interpreter = interpreterFromListing(
         File("test/fixtures/5.2.4/set-locals.txt").readAsStringSync());
 
