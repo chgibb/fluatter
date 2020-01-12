@@ -14,6 +14,7 @@ class Func {
 
   final Map<int, dynamic> upvalues;
   final Map<int, dynamic> constants;
+  final Map<int, dynamic> locals;
 
   Func(
       {@required this.name,
@@ -25,5 +26,6 @@ class Func {
       @required this.functions,
       @required this.instructionStream,
       @required this.upvalues,
-      @required this.constants});
+      @required this.constants,
+      @required this.locals});
 }

@@ -48,6 +48,7 @@ Interpreter interpreterFromListing(String listing) {
   List<Instruction> instructions = [];
   Map<int, dynamic> upvalues = {};
   Map<int, dynamic> constants = {};
+  Map<int, dynamic> locals = {};
 
   var flushFunction = () {
     Func func = Func(
@@ -60,7 +61,8 @@ Interpreter interpreterFromListing(String listing) {
         params: params,
         instructionStream: instructions,
         upvalues: upvalues,
-        constants: constants);
+        constants: constants,
+        locals: locals);
     if (func.name == "main") {
       interpreter.mainFunc = func;
     } else {
@@ -76,6 +78,7 @@ Interpreter interpreterFromListing(String listing) {
     instructions = [];
     upvalues = {};
     constants = {};
+    locals = {};
   };
 
   for (var i = 0; i != lines.length; ++i) {
@@ -143,6 +146,13 @@ Interpreter interpreterFromListing(String listing) {
         break;
 
       case _ParseState.parsingLocals:
+        if (RegExp("(locals \\()").hasMatch(lines[i])) {
+          break;
+        }
+        List<String> tokens = lines[i].split(RegExp("\\s"));
+        var index = nextNonEmptyElement(tokens, 0);
+        var val = nextNonEmptyElement(tokens, index.i + 1);
+        locals[int.parse(index.element)] = val.element;
         break;
 
       case _ParseState.parsingUpvalues:
