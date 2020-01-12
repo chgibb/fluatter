@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   test('Eval set-locals', () {
     var interpreter = interpreterFromListing(
-        File("test/fixtures/5.2.4/set-locals.txt").readAsStringSync());
+        File("fixtures/5.2.4/set-locals.txt").readAsStringSync());
 
     interpreter.call("main");
     expect(interpreter.upvalues[0]["d"], 4);

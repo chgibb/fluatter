@@ -8,5 +8,15 @@ OpCode $return =
   if (interpreter.stackFrames.length == 1 && interpreter.saveLastStackFrame) {
     return;
   }
-  interpreter.stackFrames.removeLast();
+
+  var priorFrame = interpreter.stackFrames.removeLast();
+
+  var frame = interpreter.stackFrames.last;
+
+  priorFrame.upvalues.keys.forEach((x) {
+    print((priorFrame.upvalues[x]));
+    (priorFrame.upvalues[x] as Map).keys.forEach((upvalue) {
+      frame.upvalues[x][upvalue] = priorFrame.upvalues[x][upvalue];
+    });
+  });
 });
