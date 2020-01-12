@@ -41,7 +41,7 @@ Interpreter interpreterFromListing(String listing) {
   String funcName;
   int slots;
   int numupvalues;
-  int locals;
+  int numlocals;
   int numconstants;
   int functions;
   int params;
@@ -54,7 +54,7 @@ Interpreter interpreterFromListing(String listing) {
         name: funcName,
         slots: slots,
         numupvalues: numupvalues,
-        numlocals: locals,
+        numlocals: numlocals,
         numconstants: numconstants,
         functions: functions,
         params: params,
@@ -69,7 +69,7 @@ Interpreter interpreterFromListing(String listing) {
     funcName = "";
     slots = 0;
     numupvalues = 0;
-    locals = 0;
+    numlocals = 0;
     numconstants = 0;
     functions = 0;
     params = 0;
@@ -104,7 +104,7 @@ Interpreter interpreterFromListing(String listing) {
         List<String> tokens = lines[i].split(RegExp("\\s"));
         slots = int.parse(tokens[2]);
         numupvalues = int.parse(tokens[4]);
-        locals = int.parse(tokens[6]);
+        numlocals = int.parse(tokens[6]);
         numconstants = int.parse(tokens[8]);
         functions = int.parse(tokens[10]);
         parseState = _ParseState.parsingFunctionBody;

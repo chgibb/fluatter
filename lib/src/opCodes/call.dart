@@ -9,7 +9,7 @@ OpCode $call =
   int B = registerConstants[1];
 
   StackFrame newStackFrame = StackFrame(func: interpreter.R(A, stackFrame));
-
+//print(stackFrame.func);
   if (B >= 2) {
     int i = 0;
     while (i != B - 1) {

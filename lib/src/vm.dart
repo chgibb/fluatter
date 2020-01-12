@@ -6,6 +6,7 @@ import 'package:fluatter/src/opCodes/eq.dart';
 import 'package:fluatter/src/opCodes/gettabup.dart';
 import 'package:fluatter/src/opCodes/jmp.dart';
 import 'package:fluatter/src/opCodes/loadk.dart';
+import 'package:fluatter/src/opCodes/loadnil.dart';
 import 'package:fluatter/src/opCodes/return.dart';
 import 'package:fluatter/src/opCodes/settabup.dart';
 import 'package:fluatter/src/opCodes/sub.dart';
@@ -25,7 +26,8 @@ class Interpreter {
   // ignore: non_constant_identifier_names
   dynamic Upvalue(dynamic n, StackFrame stackFrame) => stackFrame.upvalues[n];
   // ignore: non_constant_identifier_names
-  dynamic RK(int i, StackFrame stackFrame) => Kst(i, stackFrame.func);
+  dynamic RK(int i, StackFrame stackFrame) =>
+      R(i, stackFrame) != null ? R(i, stackFrame) : Kst(i, stackFrame.func);
 
   Map<String, OpCode> _opcodes = {};
 
@@ -34,6 +36,8 @@ class Interpreter {
   List<Func> closures = [];
 
   List<StackFrame> stackFrames = [];
+
+  bool saveLastStackFrame = false;
 
   Map<int, dynamic> get upvalues => stackFrames.last?.upvalues;
 
@@ -48,6 +52,7 @@ class Interpreter {
     _opcodes["GETTABUP"] = gettabup;
     _opcodes["CLOSURE"] = closure;
     _opcodes["LOADK"] = loadk;
+    _opcodes["LOADNIL"] = loadnil;
     _opcodes["EQ"] = eq;
     _opcodes["JMP"] = jmp;
     _opcodes["SUB"] = sub;
@@ -57,13 +62,17 @@ class Interpreter {
 
   List<dynamic> exec({bool saveLastFrame = true}) {
     while (stackFrames.isNotEmpty) {
-      while (stackFrames.last.pc !=
-          stackFrames.last.func.instructionStream.length) {
+      while (stackFrames.isNotEmpty &&
+          stackFrames.last.pc !=
+              stackFrames.last.func.instructionStream.length) {
         var inst = stackFrames.last.func.instructionStream[stackFrames.last.pc];
 
+        saveLastStackFrame = saveLastFrame;
         _opcodes[inst.name].exec(inst.registerConstants, this);
-
-        ++stackFrames.last.pc;
+        saveLastStackFrame = !saveLastStackFrame;
+        if (stackFrames.isNotEmpty) {
+          ++stackFrames.last.pc;
+        }
       }
 
       if (stackFrames.length == 1) {
@@ -78,8 +87,9 @@ class Interpreter {
           }
         }
       }
-
-      stackFrames.removeLast();
+      if (stackFrames.isNotEmpty) {
+        stackFrames.removeLast();
+      }
     }
     return null;
   }

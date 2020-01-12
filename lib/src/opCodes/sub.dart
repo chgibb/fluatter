@@ -13,4 +13,5 @@ OpCode sub =
 
   stackFrame.registers[A] =
       interpreter.RK(B.abs(), stackFrame) - interpreter.RK(C.abs(), stackFrame);
+      print("completed sub");
 });
