@@ -8,5 +8,5 @@ OpCode loadk =
   int A = registerConstants[0];
   int B = registerConstants[1];
 
-  stackFrame.registers[A] = interpreter.Kst(B.abs(), stackFrame.func);
+  stackFrame.registers[A] = interpreter.RK(B, stackFrame);
 });

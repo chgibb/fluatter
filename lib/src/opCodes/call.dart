@@ -1,5 +1,6 @@
 import 'package:fluatter/src/opCode.dart';
 import 'package:fluatter/src/stackFrame.dart';
+import 'package:fluatter/src/util/observableMap.dart';
 import 'package:fluatter/src/vm.dart';
 
 OpCode $call =
@@ -9,14 +10,8 @@ OpCode $call =
   int B = registerConstants[1];
 
   StackFrame newStackFrame = StackFrame(func: interpreter.R(A, stackFrame));
-  newStackFrame.registers[A] = newStackFrame.func;
-  if (B >= 2) {
-    int i = 0;
-    while (i != B - 1) {
-      newStackFrame.registers[i] = stackFrame.registers[i + 1];
-      i++;
-    }
-  }
+
+  newStackFrame.registers = ObservableMap.from(stackFrame.registers);
 
   newStackFrame.pc = -1;
 

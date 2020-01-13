@@ -1,11 +1,12 @@
 import 'package:fluatter/src/func.dart';
+import 'package:fluatter/src/util/observableMap.dart';
 import 'package:flutter/foundation.dart';
 
 class StackFrame {
   final Func func;
   final Map<int, dynamic> _upvalues;
   int pc = 0;
-  Map<int, dynamic> registers = {};
+  ObservableMap<int, dynamic> registers = ObservableMap();
 
   Map<int, dynamic> get upvalues => _upvalues;
 

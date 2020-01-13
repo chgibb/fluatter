@@ -10,10 +10,10 @@ OpCode gettabup =
   int C = registerConstants[2];
 
   var val = interpreter.Upvalue(
-      B.abs(), stackFrame)[interpreter.RK(C.abs(), stackFrame)];
+      B, stackFrame)[interpreter.RK(C, stackFrame)];
 
   if (val == null) {
-    val = interpreter.RK(C.abs(), stackFrame);
+    val = interpreter.RK(C, stackFrame);
   }
 
   if (val is String) {
@@ -26,5 +26,5 @@ OpCode gettabup =
   }
 
   stackFrame.registers[A] = interpreter.Upvalue(
-      B.abs(), stackFrame)[interpreter.RK(C.abs(), stackFrame)];
+      B, stackFrame)[interpreter.RK(C, stackFrame)];
 });

@@ -12,10 +12,10 @@ OpCode setabbup =
 
   if (!(stackFrame.registers[0] is Func)) {
     interpreter.Upvalue(A, interpreter.stackFrames.last)[
-            interpreter.RK(B.abs(), interpreter.stackFrames.last)] =
-        interpreter.RK(C.abs(), interpreter.stackFrames.last);
+            interpreter.RK(B, interpreter.stackFrames.last)] =
+        interpreter.RK(C, interpreter.stackFrames.last);
   } else {
     (stackFrame.registers[0] as Func).name =
-        interpreter.RK(B.abs(), interpreter.stackFrames.last);
+        interpreter.RK(B, interpreter.stackFrames.last);
   }
 });

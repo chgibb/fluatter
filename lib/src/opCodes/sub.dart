@@ -10,8 +10,15 @@ OpCode sub =
   int C = registerConstants[2];
   print(stackFrame.registers);
 
-  stackFrame.registers[A] =
-      interpreter.RK(B.abs(), stackFrame) - interpreter.RK(C.abs(), stackFrame);
+  var l = interpreter.RK(B, stackFrame);
+  if (!(l is int)) {
+    l = interpreter.Kst(B, stackFrame.func);
+  }
 
-  print(stackFrame.registers);
+  var r = interpreter.RK(C, stackFrame);
+  if (!(r is int)) {
+    l = interpreter.Kst(C, stackFrame.func);
+  }
+
+  stackFrame.registers[A] = l - r;
 });

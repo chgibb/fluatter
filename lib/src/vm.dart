@@ -27,7 +27,7 @@ class Interpreter {
   dynamic Upvalue(dynamic n, StackFrame stackFrame) => stackFrame.upvalues[n];
   // ignore: non_constant_identifier_names
   dynamic RK(int i, StackFrame stackFrame) =>
-      R(i, stackFrame) != null ? R(i, stackFrame) : Kst(i, stackFrame.func);
+      i < 0 ? Kst(i.abs(), stackFrame.func) : R(i, stackFrame);
 
   Map<String, OpCode> _opcodes = {};
 
@@ -68,6 +68,8 @@ class Interpreter {
         var inst = stackFrames.last.func.instructionStream[stackFrames.last.pc];
 
         saveLastStackFrame = saveLastFrame;
+        // print(
+            // "${stackFrames.last.func.name}: ${stackFrames.last.pc} ${inst.name}");
         _opcodes[inst.name].exec(inst.registerConstants, this);
         saveLastStackFrame = !saveLastStackFrame;
         if (stackFrames.isNotEmpty) {
