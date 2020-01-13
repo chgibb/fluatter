@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:fluatter/src/func.dart';
 import 'package:fluatter/src/instruction.dart';
+import 'package:fluatter/src/util/observableMap.dart';
 import 'package:fluatter/src/vm.dart';
 import 'package:fluatter/src/util/nextNonEmptyElement.dart';
 
@@ -48,7 +49,7 @@ Interpreter interpreterFromListing(String listing) {
   List<Instruction> instructions = [];
   Map<int, dynamic> upvalues = {};
   Map<int, dynamic> constants = {};
-  Map<int, dynamic> locals = {};
+  ObservableMap<int, dynamic> locals;
 
   var flushFunction = () {
     Func func = Func(
@@ -78,7 +79,7 @@ Interpreter interpreterFromListing(String listing) {
     instructions = [];
     upvalues = {};
     constants = {};
-    locals = {};
+    locals = ObservableMap("locals");
   };
 
   for (var i = 0; i != lines.length; ++i) {

@@ -68,8 +68,8 @@ class Interpreter {
         var inst = stackFrames.last.func.instructionStream[stackFrames.last.pc];
 
         saveLastStackFrame = saveLastFrame;
-        // print(
-            // "${stackFrames.last.func.name}: ${stackFrames.last.pc} ${inst.name}");
+        print(
+            "${stackFrames.last.func.name}: ${stackFrames.last.pc} ${inst.name}");
         _opcodes[inst.name].exec(inst.registerConstants, this);
         saveLastStackFrame = !saveLastStackFrame;
         if (stackFrames.isNotEmpty) {

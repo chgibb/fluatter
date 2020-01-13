@@ -1,12 +1,14 @@
 class ObservableMap<T, U> {
   Map<T, U> _map = {};
+  String _debugName;
 
-  ObservableMap([Map<T, U> other]) {
+  ObservableMap(String debugName, [Map<T, U> other]) {
+    _debugName = debugName;
     _map = other != null ? other : {};
   }
 
   factory ObservableMap.from(ObservableMap<T, U> other) {
-    return ObservableMap(Map.from(other._map));
+    return ObservableMap(other._debugName, Map.from(other._map));
   }
 
   U operator [](T key) {
@@ -14,7 +16,9 @@ class ObservableMap<T, U> {
   }
 
   operator []=(T key, U value) {
-    print("   Set $key $value");
+    print("   Set $_debugName $key $value");
     _map[key] = value;
   }
+
+  int get length => _map.length;
 }

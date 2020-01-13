@@ -11,7 +11,7 @@ OpCode $call =
 
   StackFrame newStackFrame = StackFrame(func: interpreter.R(A, stackFrame));
 
-  newStackFrame.registers = ObservableMap.from(stackFrame.registers);
+  newStackFrame.func.locals = ObservableMap.from(stackFrame.registers);
 
   newStackFrame.pc = -1;
 

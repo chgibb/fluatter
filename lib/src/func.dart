@@ -1,4 +1,5 @@
 import 'package:fluatter/src/instruction.dart';
+import 'package:fluatter/src/util/observableMap.dart';
 import 'package:flutter/foundation.dart';
 
 class Func {
@@ -14,7 +15,7 @@ class Func {
 
   final Map<int, dynamic> upvalues;
   final Map<int, dynamic> constants;
-  final Map<int, dynamic> locals;
+  ObservableMap<int, dynamic> locals;
 
   Func(
       {@required this.name,
