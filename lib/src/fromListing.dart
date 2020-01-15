@@ -145,7 +145,6 @@ Interpreter interpreterFromListing(String listing) {
 
         constants[int.tryParse(index.element)] = int.tryParse(val);
         break;
-
       case _ParseState.parsingLocals:
         if (RegExp("(locals \\()").hasMatch(lines[i])) {
           break;
