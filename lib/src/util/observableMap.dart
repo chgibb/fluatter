@@ -21,4 +21,7 @@ class ObservableMap<T, U> {
   }
 
   int get length => _map.length;
+
+  @override
+  String toString() => _map.toString();
 }
