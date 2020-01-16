@@ -24,4 +24,8 @@ class ObservableMap<T, U> {
 
   @override
   String toString() => _map.toString();
+
+  List<T> toList() => _map.keys.toList();
+
+  Iterable<T> get keys => _map.keys;
 }
