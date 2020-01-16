@@ -7,6 +7,7 @@ import 'package:fluatter/src/opCodes/gettabup.dart';
 import 'package:fluatter/src/opCodes/jmp.dart';
 import 'package:fluatter/src/opCodes/loadk.dart';
 import 'package:fluatter/src/opCodes/loadnil.dart';
+import 'package:fluatter/src/opCodes/mul.dart';
 import 'package:fluatter/src/opCodes/return.dart';
 import 'package:fluatter/src/opCodes/settabup.dart';
 import 'package:fluatter/src/opCodes/sub.dart';
@@ -58,6 +59,7 @@ class Interpreter {
     _opcodes["EQ"] = eq;
     _opcodes["JMP"] = jmp;
     _opcodes["SUB"] = sub;
+    _opcodes["MUL"] = mul;
     _opcodes["CALL"] = $call;
     _opcodes["RETURN"] = $return;
   }
