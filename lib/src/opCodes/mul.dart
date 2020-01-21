@@ -13,5 +13,7 @@ OpCode mul =
 
   var r = interpreter.RK(C, stackFrame);
 
+  print("Multiplied $l x $r");
+
   stackFrame.registers[A] = l * r;
 });

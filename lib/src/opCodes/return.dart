@@ -3,7 +3,8 @@ import 'package:fluatter/src/vm.dart';
 
 OpCode $return =
     OpCode(exec: (List<int> registerConstants, Interpreter interpreter) {
-  //int B = registerConstants[1];
+  int A = registerConstants[0];
+  int B = registerConstants[1];
 
   if (interpreter.stackFrames.length == 1 && interpreter.saveLastStackFrame) {
     return;
@@ -13,8 +14,19 @@ OpCode $return =
 
   var frame = interpreter.stackFrames.last;
 
+  var carryOverRegisters = priorFrame.registers.keys.take(B - 1).toList();
+
+  if (carryOverRegisters.isNotEmpty) {
+
+    for (var i = 0; i != carryOverRegisters.length; ++i) {
+      frame.registers[A + i] = carryOverRegisters[i];
+    }
+  }
+  
+  print("Caller's registers: ${frame.registers}");
+
   priorFrame.upvalues.keys.forEach((x) {
-    print((priorFrame.upvalues[x]));
+    // print((priorFrame.upvalues[x]));
     (priorFrame.upvalues[x] as Map).keys.forEach((upvalue) {
       frame.upvalues[x][upvalue] = priorFrame.upvalues[x][upvalue];
     });
