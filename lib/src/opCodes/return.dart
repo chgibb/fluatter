@@ -14,15 +14,21 @@ OpCode $return =
 
   var frame = interpreter.stackFrames.last;
 
-  var carryOverRegisters = priorFrame.registers.keys.take(B - 1).toList();
+  var carryOverKeys = priorFrame.registers.keys.take(B - 1).toList();
+  Map<int, dynamic> carryOverRegisters = {};
+
+  carryOverKeys.forEach((x) {
+    carryOverRegisters[x] = priorFrame.registers[x];
+  });
 
   if (carryOverRegisters.isNotEmpty) {
-
     for (var i = 0; i != carryOverRegisters.length; ++i) {
       frame.registers[A + i] = carryOverRegisters[i];
     }
   }
-  
+
+  print("Callee's registers ${priorFrame.registers}");
+  print("Carryover registers: $carryOverRegisters");
   print("Caller's registers: ${frame.registers}");
 
   priorFrame.upvalues.keys.forEach((x) {

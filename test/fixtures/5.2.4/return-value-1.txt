@@ -1,0 +1,28 @@
+
+main <fixtures/return-value-1.lua:0,0> (7 instructions at 0x5639746ef700)
+0+ params, 2 slots, 1 upvalue, 0 locals, 3 constants, 1 function
+	1	[1]	SETTABUP 	0 -1 -2	; _ENV "a" 0
+	2	[6]	CLOSURE  	0 0	; 0x5639746efac0
+	3	[3]	SETTABUP 	0 -3 0	; _ENV "returnB"
+	4	[8]	GETTABUP 	0 0 -3	; _ENV "returnB"
+	5	[8]	CALL     	0 1 2
+	6	[8]	SETTABUP 	0 -1 0	; _ENV "a"
+	7	[8]	RETURN   	0 1
+constants (3) for 0x5639746ef700:
+	1	"a"
+	2	0
+	3	"returnB"
+locals (0) for 0x5639746ef700:
+upvalues (1) for 0x5639746ef700:
+	0	_ENV	1	0
+
+function <fixtures/return-value-1.lua:3,6> (3 instructions at 0x5639746efac0)
+0 params, 2 slots, 0 upvalues, 1 local, 1 constant, 0 functions
+	1	[4]	LOADK    	0 -1	; 1
+	2	[5]	RETURN   	0 2
+	3	[6]	RETURN   	0 1
+constants (1) for 0x5639746efac0:
+	1	1
+locals (1) for 0x5639746efac0:
+	0	B	2	4
+upvalues (0) for 0x5639746efac0:
