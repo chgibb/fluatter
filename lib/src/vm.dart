@@ -50,6 +50,7 @@ class Interpreter {
   //http://luaforge.net/docman/83/98/ANoFrillsIntroToLua51VMInstructions.pdf
   //http://www.lua.inf.puc-rio.br/publications/mascarenhas09optimized.pdf
   //https://surface.syr.edu/cgi/viewcontent.cgi?article=1012&context=lcsmith_other
+  //https://github.com/gamesys/moonshine/blob/master/vm/src/operations.js
   Interpreter() {
     _opcodes["SETTABUP"] = setabbup;
     _opcodes["GETTABUP"] = gettabup;
