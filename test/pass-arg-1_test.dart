@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   test('Eval pass-arg-1', () {
     var interpreter = interpreterFromListing(
-        File("test/fixtures/5.2.4/pass-arg-1.txt").readAsStringSync());
+        File("fixtures/5.2.4/pass-arg-1.txt").readAsStringSync());
 
     interpreter.call("main");
 
