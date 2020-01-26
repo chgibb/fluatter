@@ -14,22 +14,38 @@ OpCode $return =
 
   var frame = interpreter.stackFrames.last;
 
-  var carryOverKeys = priorFrame.registers.keys.take(B - 1).toList();
-  Map<int, dynamic> carryOverRegisters = {};
+  print("Callee's registers ${priorFrame.registers}");
+  print("Caller's registers: ${frame.registers}");
 
-  carryOverKeys.forEach((x) {
-    carryOverRegisters[x] = priorFrame.registers[x];
-  });
-
-  if (carryOverRegisters.isNotEmpty) {
-    for (var i = 0; i != carryOverRegisters.length; ++i) {
-      frame.registers[A + i] = carryOverRegisters[i];
+  if (B == 0) {
+    // var carryOverKeys = priorFrame.registers.keys.toList();
+    for (var i = A; i < priorFrame.registers.keys.length; ++i) {
+      frame.registers[i] = priorFrame.registers[i];
+    }
+  } else {
+    for (var i = 0; i < B - 1; ++i) {
+      frame.registers[i] = priorFrame.registers[A + i];
     }
   }
 
-  print("Callee's registers ${priorFrame.registers}");
-  print("Carryover registers: $carryOverRegisters");
-  print("Caller's registers: ${frame.registers}");
+  print("Caller's registers after carryover: ${frame.registers}");
+
+  // var carryOverKeys = priorFrame.registers.keys.take(B - 1).toList();
+  // Map<int, dynamic> carryOverRegisters = {};
+
+  // carryOverKeys.forEach((x) {
+  //   carryOverRegisters[x] = priorFrame.registers[x];
+  // });
+
+  // if (carryOverRegisters.isNotEmpty) {
+  //   for (var i = 0; i != carryOverRegisters.length; ++i) {
+  //     frame.registers[A + i] = carryOverRegisters[i];
+  //   }
+  // }
+
+  // print("Callee's registers ${priorFrame.registers}");
+  // print("Carryover registers: $carryOverRegisters");
+  // print("Caller's registers: ${frame.registers}");
 
   priorFrame.upvalues.keys.forEach((x) {
     // print((priorFrame.upvalues[x]));
